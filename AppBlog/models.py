@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -6,7 +7,7 @@ class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField('Nombre de la Categoría', max_length=100, null = False, blank = False)
     status = models.BooleanField('Categoría Activa / Categoría No Activa', default=True)
-    published = models.DateTimeField('Fecha de Creación', auto_now_add=True, auto_now=False)
+    published = models.DateField('Fecha de Creación', auto_now_add=True, auto_now=False)
     
     class Meta:
         verbose_name = 'Categoría'
@@ -14,21 +15,6 @@ class Category(models.Model):
         
     def __str__(self):
         return self.name
-
-class Post(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField('Nombre del Post', max_length=100, null = False, blank = False)
-    status = models.BooleanField('Post Activo / Post No Activa', default=True)
-    content = models.TextField()
-    published = models.DateTimeField('Fecha de Creación', auto_now_add=True)
-    updated = models.DateTimeField('Fecha de Modificacion', auto_now=True)
-
-    class Meta:
-        verbose_name = 'Post'
-        verbose_name_plural = 'Posts'
-        
-    def __str__(self):
-        return self.title
 
 class Autor(models.Model):
     id = models.AutoField(primary_key=True)
@@ -47,4 +33,24 @@ class Autor(models.Model):
         verbose_name_plural = 'Autores'
         
     def __str__(self):
-        return "{0},{1}".format(self.name, self.surname)
+        return "{0},  {1}".format(self.name, self.surname)
+
+class Post(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField('Nombre del Post', max_length=100, null = False, blank = False)
+    slug = models.CharField('Slug', max_length=100, null = False, blank = False)
+    description = models.CharField('Descripción', max_length=100, null = True, blank = True)
+    image = models.URLField(max_length=200, null = False, blank = False)
+    autor = models.ForeignKey(Autor, max_length=100, verbose_name='Autor', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, verbose_name='Categoría', on_delete=models.CASCADE)
+    status = models.BooleanField('Post Activo / Post No Activo', default=True)
+    content = RichTextField()
+    published = models.DateField('Fecha de Creación', auto_now_add=True)
+    updated = models.DateField('Fecha de Modificacion', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
+        
+    def __str__(self):
+        return self.title
