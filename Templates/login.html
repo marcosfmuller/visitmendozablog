@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Login {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h5> Inicio de Sesión </h5>
+{% endblock titulo_body %}
+
+{% block contenido %}
+
+<form action="{% url 'AppAccounts:login' %}" method="POST"> {% csrf_token %} 
+
+    <table> 
+        {{ form.as_table }}
+    </table>
+    <br>
+    <input type="submit" class="btn btn-primary" value="Iniciar Sesión">
+    <br>
+</form>
+
+{{ mensaje }}
+
+{% endblock contenido %}

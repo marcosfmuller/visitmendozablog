@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Registro {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h5> Registro de Usuarios </h5>
+{% endblock titulo_body %}
+
+{% block contenido %}
+
+<form action="{% url 'AppAccounts:register' %}" method="POST"> {% csrf_token %} 
+
+    <table> 
+        {{ form.as_table }}
+    </table>
+    <br>
+    
+    <input type="submit" class="btn btn-primary" value="Registrarme">
+
+
+</form>
+
+{{ mensaje }}
+
+{% endblock contenido %}
+
+
+
