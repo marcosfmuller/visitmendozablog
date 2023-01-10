@@ -30,8 +30,18 @@ class AutorAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('name', 'surname', 'status', 'published')
     resource_class = AutorResource
 
+class AboutResource(resources.ModelResource):
+    class Meta:
+        model = About
+
+class AboutAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = ['title']
+    list_display = ('title', 'status', 'published')
+    resource_class = AboutResource
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Autor, AutorAdmin)
+admin.site.register(About, AboutAdmin)
 
 # Register your models here.

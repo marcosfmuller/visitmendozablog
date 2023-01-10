@@ -33,14 +33,14 @@ def login_request(request):
             user=authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return render(request, 'index.html', {'mensaje':f"Bienvenido {user}" })
+                #return render(request, 'index.html')
                 #messages.info(request, f"Has iniciado sesion como {user}")
-                #return redirect("AppBlog:home")
+                return redirect("AppBlog:index")
                 #return render(request, 'index.html', {"mensaje":"Has iniciado sesión correctamente"})
             else:
                 return render(request, 'login.html', {"form":form, "mensaje":"Usuario o contraseña incorrectos"})
         else:
-            return render(request, 'login.html', {"form":form, "mensaje":"Error al iniciar sesión"})
+            return render(request, 'login.html', {"form":form, "mensaje":"Usuario o contraseña incorrectos"})
     else:
         form=AuthenticationForm()    
     return render(request, 'login.html', {"form":form})

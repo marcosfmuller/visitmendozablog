@@ -54,3 +54,20 @@ class Post(models.Model):
         
     def __str__(self):
         return self.title
+
+class About(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField('Titulo', max_length=100, null = False, blank = False)
+    description = models.CharField('Descripción', max_length=100, null = True, blank = True)
+    image = models.URLField(max_length=200, null = False, blank = False)
+    content = RichTextField()
+    status = models.BooleanField('Activo / No Activo', default=True)
+    published = models.DateField('Fecha de Creación', auto_now_add=True)
+    updated = models.DateField('Fecha de Modificacion', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Acerca de'
+        verbose_name_plural = 'Acerca de'
+        
+    def __str__(self):
+        return self.title

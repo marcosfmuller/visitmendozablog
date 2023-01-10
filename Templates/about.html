@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - About Us {% endblock titulo %}
+
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> About Us </h3>
+    <h5> {{ about.description }} </h5>
+{% endblock titulo_body %}
+
+{% block contenido %}
+
+    {{ about.content | safe }}
+   
+
+{% endblock contenido %}
+

@@ -28,30 +28,38 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:index' %}">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Post</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:about' %}">Acerca de</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:gastronomy' %}">Gastronomía</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:hotels' %}">Hotelería</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:activities' %}">Actividades</a></li>
                         {% if user.is_authenticated %}
                         <li class="nav-item"><a class="btn btn-primary" style="color:red" href="{% url 'AppAccounts:logout' %}">Cerrar Sesión</a></li>
-                        <li class="navbar-brand">  Hola <br> {{ user }} </li>
-                        <img src="{{ imagen }}" alt="">
+                            {% if user.is_staff %}
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="admin"> Hola {{ user }}</a></li>
+                            {% else %}                                
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="profile.html">  Hola {{ user }} </a></li>
+                            <img src="{{ imagen }}" alt="">
+                            {% endif %}
                         {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:greenyellow" href="{% url 'AppAccounts:register' %}">Registrarme</a></li>
                         <li class="nav-item"><a class="btn btn-primary" href="{% url 'AppAccounts:login' %}">Iniciar Sesion</a></li>
                         {% endif %}
+                        
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url({% block img %} {% static 'assets/img/home-bg1.jpg' %} {% endblock img %})">
+        
+        <header class="masthead" style="background-image: url({% static 'assets/img/home-bg1.jpg' %})">
+        
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             {% block titulo_body %}
                             <h1>Bienvenidos</h1>
-                            <h5>Al Blog Oficial de @VisitMendoza</h5>
+                            <h3>Al Blog Oficial de @VisitMendoza</h3>
                             <!-- <span class="subheading">Al Blog Oficial de @VisitMendoza</span>-->
                             {% endblock titulo_body %}
                         </div>
@@ -66,28 +74,35 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
         {% block contenido %}
                     <!-- Post preview-->
+            {% if posts %}
+                {% for post in posts %}
                     <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
-                            <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
+                        <a href="{% url 'AppBlog:detailpost' post.slug %}">
+                            <h2 class="post-title"> {{ post.title }} </h2>
+                            <h3 class="post-subtitle"> {{ post.description}} </h3>
                         </a>
                         <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 24, 2022
+                            Creado por
+                            <a href="{% url 'AppBlog:about' %}"> {{post.autor}} </a>
+                            el {{ post.published }}
                         </p>
                     </div>
+                {% endfor %}
+            {% else %}
+                <h1>Aún no hay posts</h1>
+            {% endif %} 
+            
                     <!-- Divider-->
-                    
                     <!-- Divider-->
                     <hr class="my-4" />
-                    <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                                        
+        {% endblock contenido %}
+                    </div>
                 </div>
             </div>
         </div>
         
-        {% endblock contenido %}
+        
         <br>
         <!-- Footer-->
         <footer class="border-top">
