@@ -28,15 +28,12 @@ def login_request(request):
     if request.method=="POST":
         form=AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username=form.cleaned_data.get('username')
+            username= form.cleaned_data.get('username')
             password=form.cleaned_data.get('password')
-            user=authenticate(username=username, password=password)
+            user=authenticate(username = username, password = password)
             if user is not None:
                 login(request, user)
-                #return render(request, 'index.html')
-                #messages.info(request, f"Has iniciado sesion como {user}")
                 return redirect("AppBlog:index")
-                #return render(request, 'index.html', {"mensaje":"Has iniciado sesión correctamente"})
             else:
                 return render(request, 'login.html', {"form":form, "mensaje":"Usuario o contraseña incorrectos"})
         else:

@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - New Post {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> Nuevo Post </h3>
+{% endblock titulo_body %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block contenido %}
+
+<form class="post-form" action="{% url 'AppBlog:newpost' %}" method="POST"> {% csrf_token %} 
+
+    <table> 
+        {{ form.as_p | safe }}
+    </table>
+    <br>
+    <button type="submit" class="save btn btn-primary"> Crear Post </button>
+    <br>
+    
+
+{% endblock contenido %}

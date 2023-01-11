@@ -66,14 +66,39 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
+            {% block search %}
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <form method="GET">
+                            <div id="custom-search-input">
+                                <div class="input-group col-md-12">
+                                    <input type="text" class="form-control" placeholder="Buscar" name="buscar" value="{{ request.GET.buscar }}"/>
+                                    <span class="input-group-list">
+                                        <i class="icon icon-search"></i>
+                                        <button type="submit" class="btn btn-primary">Buscar</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endblock search %}
         </header>
+       
         <!-- Main Content-->
-        
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-        {% block contenido %}
-                    <!-- Post preview-->
+       {% block contenido %}
+       {% if user.is_staff %}
+       <a href="{% url 'AppBlog:newpost' %}" class="btn btn-primary">Crear Post</a>
+       {% endif %}
+         <br>
+       <!-- Post preview-->
             {% if posts %}
                 {% for post in posts %}
                     <div class="post-preview">
@@ -89,6 +114,7 @@
                     </div>
                 {% endfor %}
             {% else %}
+            <br>
                 <h1>Aún no hay posts</h1>
             {% endif %} 
             
@@ -101,7 +127,29 @@
                 </div>
             </div>
         </div>
-        
+        <br>
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-left">
+                    {% if posts.has_previous %}
+                        <div class="clearfix">
+                        <a href="?page={{ posts.previous_page_number }}&buscar={{ request.GET.buscar }}" class="btn btn-primary">Anterior</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-right">
+                    {% if posts.has_next %}
+                        <div class="clearfix">
+                        <a href="?page={{ posts.next_page_number }}&buscar={{ request.GET.buscar }}" class="btn btn-primary">Siguiente</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
         
         <br>
         <!-- Footer-->

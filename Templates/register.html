@@ -9,6 +9,10 @@
     <h3> Registro de Usuarios </h3>
 {% endblock titulo_body %}
 
+{% block search %}
+
+{% endblock search %}
+
 {% block contenido %}
 
 <form action="{% url 'AppAccounts:register' %}" method="POST"> {% csrf_token %} 

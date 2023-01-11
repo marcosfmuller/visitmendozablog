@@ -7,6 +7,7 @@ urlpatterns = [
     path('gastronomy/', gastronomy, name='gastronomy'),
     path('hotels/', hotels, name='hotels'),
     path('activities/', activities, name='activities'),
-    path('<slug:slug>/', detailpost, name='detailpost')
+    path('newpost/', createPost.as_view(), name='newpost'),
+    path('<slug:slug>/', detailpost, name='detailpost'),
     
 ]
