@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from .forms import PostForm
+from .forms import *
 from datetime import datetime
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
@@ -104,8 +104,8 @@ def activities(request):
 
 class createPost(LoginRequiredMixin, CreateView):
     model = Post
-    form_class = PostForm
+    form_class = PostAdminForm
     template_name = 'newpost.html'
     #fields = ['title', 'slug', 'description', 'category']
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('AppBlog:index')
 

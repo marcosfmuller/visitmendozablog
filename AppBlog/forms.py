@@ -1,12 +1,23 @@
 from django import forms
-from ckeditor.fields import RichTextField
+from ckeditor.widgets import CKEditorWidget
 from .models import Post
 
+class PostAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+
+
+
+"""
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'slug', 'content', 'image', 'status', 'category')
-        """widgets = {
+        widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'content': RichTextField(),

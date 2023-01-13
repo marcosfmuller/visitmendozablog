@@ -16,10 +16,14 @@
 {% block contenido %}
 
 <form class="post-form" action="{% url 'AppBlog:newpost' %}" method="POST"> {% csrf_token %} 
-
-    <table> 
-        {{ form.as_p | safe }}
-    </table>
+    
+    
+        {{ myform.media }}
+        {{ myform.as_p }}
+        {{ form.as_p }}
+        {{ form.media }}
+        {{ content|safe }}
+    
     <br>
     <button type="submit" class="save btn btn-primary"> Crear Post </button>
     <br>

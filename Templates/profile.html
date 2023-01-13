@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Editar Perfil {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> Editar Perfil </h3>
+{% endblock titulo_body %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block contenido %}
+
+<form action="{% url 'AppAccounts:profile' %}" method="POST"> {% csrf_token %} 
+
+    <table> 
+        {{ form.as_table | safe }}
+    </table>
+    <br>
+    
+    <input type="submit" class="btn btn-primary" value="Guardar">
+
+
+</form>
+
+{{ mensaje }}
+
+{% endblock contenido %}

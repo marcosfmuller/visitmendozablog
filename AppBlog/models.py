@@ -40,7 +40,7 @@ class Post(models.Model):
     title = models.CharField('Nombre del Post', max_length=100, null = False, blank = False)
     slug = models.CharField('Slug', max_length=100, null = False, blank = False)
     description = models.CharField('Descripción', max_length=100, null = True, blank = True)
-    image = models.URLField(max_length=200, null = False, blank = False)
+    image = models.URLField('Imagen', max_length=200, null = False, blank = False)
     autor = models.ForeignKey(Autor, max_length=100, verbose_name='Autor', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, verbose_name='Categoría', on_delete=models.CASCADE)
     status = models.BooleanField('Post Activo / Post No Activo', default=True)

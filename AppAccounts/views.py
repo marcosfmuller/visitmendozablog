@@ -41,3 +41,14 @@ def login_request(request):
     else:
         form=AuthenticationForm()    
     return render(request, 'login.html', {"form":form})
+
+@login_required
+def editar_perfil(request):
+    if request.method=="POST":
+        form=UserEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('AppBlog:index')
+    else:
+        form=UserEditForm(instance=request.user)    
+    return render(request, 'profile.html', {"form":form})
