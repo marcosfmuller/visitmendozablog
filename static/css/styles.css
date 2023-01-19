@@ -1968,7 +1968,7 @@ progress {
   margin-bottom: 1rem;
   color: #212529;
   vertical-align: top;
-  border-color: #dee2e6;
+  border-color: #000000;
 }
 .table > :not(caption) > * > * {
   padding: 0.5rem 0.5rem;
@@ -1983,7 +1983,7 @@ progress {
   vertical-align: bottom;
 }
 .table > :not(:first-child) {
-  border-top: 2px solid currentColor;
+  border-top: 2px solid black;
 }
 
 .caption-top {
@@ -2005,7 +2005,7 @@ progress {
   border-bottom-width: 0;
 }
 .table-borderless > :not(:first-child) {
-  border-top-width: 0;
+  border-top-width: 1px solid black;
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) > * {
@@ -2032,7 +2032,7 @@ progress {
   --bs-table-hover-bg: #bdd6da;
   --bs-table-hover-color: #000;
   color: #000;
-  border-color: #b8d0d4;
+  border-color: #000000;
 }
 
 .table-secondary {
@@ -2044,7 +2044,7 @@ progress {
   --bs-table-hover-bg: #d1d2d4;
   --bs-table-hover-color: #000;
   color: #000;
-  border-color: #cbccce;
+  border-color: #000000;
 }
 
 .table-success {

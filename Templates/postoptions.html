@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Opciones de Post {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> Opciones de Post </h3>
+{% endblock titulo_body %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block contenido %}
+
+<a href="{% url 'AppBlog:newpost' %}" class="btn btn-primary">Crear Post</a>
+<br>
+<br>
+<ul>
+    {% for post in posts %}
+        <li> {{ post.title }} </li>
+        <a href="{% url 'AppBlog:postedit' post.id %}" style="color:green"> Editar </a>
+        <a href="{% url 'AppBlog:postdelete' post.id %}" style="color:red"> Eliminar </a> <br>
+        
+    {% endfor %}
+</ul>
+
+{% endblock contenido %}

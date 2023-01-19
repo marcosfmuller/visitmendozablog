@@ -17,16 +17,18 @@
 
 <form action="{% url 'AppAccounts:profile' %}" method="POST"> {% csrf_token %} 
 
+    Bienvenido {{ user.username }} 
+    <br>
+    <br>
     <table> 
         {{ form.as_table | safe }}
     </table>
     <br>
     
     <input type="submit" class="btn btn-primary" value="Guardar">
+    <a class="btn btn-primary text" onclick="history.back()">Salir sin Guardar</a>
 
 
 </form>
-
-{{ mensaje }}
 
 {% endblock contenido %}

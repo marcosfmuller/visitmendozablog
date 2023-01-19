@@ -14,7 +14,7 @@ class RegistroUsuarioForm(UserCreationForm):
 
 class UserEditForm(forms.ModelForm):
     email=forms.EmailField()
-    password1=forms.CharField(label='Ingrese Contraseña',widget=forms.PasswordInput)
+    password1=forms.CharField(label='Nueva Contraseña',widget=forms.PasswordInput)
     password2=forms.CharField(label='Confirme Contraseña',widget=forms.PasswordInput)
     first_name=forms.CharField(label='Nombre')
     last_name=forms.CharField(label='Apellido')

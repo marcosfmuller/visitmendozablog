@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Lista de Usuarios {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> Lista de Usuarios </h3>
+{% endblock titulo_body %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block contenido %}
+
+<form action="{% url 'AppAccounts:userlist' %}" method="GET">
+
+    <h3> Bienvenido {{ user.username }} </h3>
+    <br>
+    <h5> Lista de Usuarios </h5>
+
+    <!-- <table style="border-style: solid; border-width: 1px;"> -->
+    <ul class="list-group">
+        <table>
+        <tr>
+            <th> Usuario </th>
+            <th> Email </th>
+            <th> Nombre </th>
+            <th> Apellido </th>
+        </tr>
+        {% for usuario in object_list %}
+            <tr>
+                <td> {{ usuario.username }} </td>
+                <td> {{ usuario.email }} </td>
+                <td> {{ usuario.first_name }} </td>
+                <td> {{ usuario.last_name }} </td> 
+                <tr> <td> <a href="{% url 'AppAccounts:useredit' usuario.id %}" style="color:green"> Editar </a> 
+                     <a href="{% url 'AppAccounts:userdelete' usuario.id %}" style="color:red"> Eliminar </a> </td></tr>
+           </tr>
+           
+        {% endfor %}
+        
+        </table>
+    </ul>
+    <br>
+    <a class="btn btn-primary text" onclick="history.back()">Volver</a>
+</form>
+
+{{ mensaje }}
+
+{% endblock contenido %}

@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Lista de Usuarios {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> Lista de Usuarios </h3>
+{% endblock titulo_body %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block contenido %}
+
+<form method="post">{% csrf_token %}
+    Confirma que deseas eliminar el usuario "{{ object }}"? <br>
+    <input type="submit" class="btn btn-danger" value="Si">
+    <a class="btn btn-primary text" onclick="history.back()">No, volver</a>
+
+</form>
+
+
+{% endblock contenido %}

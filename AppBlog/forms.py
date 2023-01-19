@@ -12,8 +12,7 @@ class PostAdminForm(forms.ModelForm):
 
 
 
-"""
-class PostForm(forms.ModelForm):
+""" class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'slug', 'content', 'image', 'status', 'category')
@@ -24,4 +23,4 @@ class PostForm(forms.ModelForm):
             'image': forms.URLInput(attrs={'class': 'form-control'}),
             'status': forms.CheckboxInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
-        }"""
+        } """

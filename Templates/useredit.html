@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Lista de Usuarios {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> Lista de Usuarios </h3>
+{% endblock titulo_body %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block contenido %}
+
+<h5> Modificacion de Usuario </h5>
+<br>
+<form method="post">{% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+        <br>
+        <input type="submit" class="btn btn-primary" value="Guardar">
+        <a class="btn btn-primary text" onclick="history.back()">Salir sin Guardar</a>
+    
+</form>
+
+
+{% endblock contenido %}

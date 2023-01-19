@@ -33,11 +33,11 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:hotels' %}">Hotelería</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:activities' %}">Actividades</a></li>
                         {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="btn btn-primary" style="color:red" href="{% url 'AppAccounts:logout' %}">Cerrar Sesión</a></li>
+                        <li class="nav-item"><a class="btn btn-primary" style="color:rgb(255, 0, 0)" href="{% url 'AppAccounts:logout' %}">Cerrar Sesión</a></li>
                             {% if user.is_staff %}
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="admin"> Hola {{ user }}</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:rgb(226, 142, 187)" href="{% url 'AppAccounts:panelctrl' %}"> Hola {{ user.username }}</a></li>
                             {% else %}                                
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppAccounts:profile' %}">  Hola {{ user }} </a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:rgb(136, 240, 133)" href="{% url 'AppAccounts:profile' %}">  Hola {{ user.username }} </a></li>
                             <img src="{{ imagen }}" alt="">
                             {% endif %}
                         {% else %}
@@ -128,31 +128,24 @@
             </div>
         </div>
         <br>
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-left">
-                    {% if posts.has_previous %}
-                        <div class="clearfix">
-                            <a href="?page={{ posts.previous_page_number }}&buscar={{ request.GET.buscar }}" class="btn btn-primary float-left">Anterior</a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
+        <div class="d-flex justify-content-center mb-4">
+            <nav>
+                <ol class="pagination">
+                {% if posts.has_previous %}
+                    <li class="page-item">
+                        <a class="btn btn-primary" color="btn-primary" style="border:1px" href="?page={{ posts.previous_page_number }}&buscar={{ request.GET.buscar }}">Anterior</a>
+                    </li>
+                {% endif %}
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="btn btn-primary" style="border:1px" href="?page={{ posts.next_page_number }}&buscar={{ request.GET.buscar }}">Siguiente</a>
+                    </li>
+                {% endif %}
+                </ol>
+            </nav>
         </div>
         <br>
-        <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-right">
-                    {% if posts.has_next %}
-                        <div class="clearfix">
-                            <a href="?page={{ posts.next_page_number }}&buscar={{ request.GET.buscar }}" class="btn btn-primary float-right">Siguiente</a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        
-        <br>
+
         <!-- Footer-->
         <footer class="border-top">
             <div class="container px-4 px-lg-5">

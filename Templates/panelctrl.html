@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block titulo %} Visit Mendoza - Editar Perfil {% endblock titulo %}
+
+{% block titulo_body %} 
+    <h1> @VisitMendoza </h1>
+    <h3> Panel de Control </h3>
+{% endblock titulo_body %}
+
+{% block search %}
+
+{% endblock search %}
+
+{% block contenido %}
+
+<ul>
+    {% if user is not None %} 
+        {% if user.is_authenticated %} 
+            {% if user.is_staff %} 
+                <h3> Bienvenido {{ user.username }} </h3>
+                <a href="{% url 'AppAccounts:profile' %}"> Editar Perfil </a> <br>
+                <a href="{% url 'AppAccounts:userlist' %}"> Ver Usuarios </a> <br>
+                <a href="{% url 'AppBlog:postoptions' %}"> Opciones de Post </a> <br>
+                <a href="/admin"> Administrar Sitio </a> <br>
+
+                <p style="color:blue"> {{ mensaje }} </p>
+            <!-- {% else %}
+                <h3> Bienvenido {{ user.username }} </h3>
+                <a href="{% url 'AppAccounts:profile' %}"> Editar mi Perfil </a> <br> -->
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+</ul>
+
+{% endblock contenido %}

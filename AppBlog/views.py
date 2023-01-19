@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .forms import *
 from datetime import datetime
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . models import *
@@ -20,7 +20,7 @@ def home(request):
             Q(title__icontains=quertyset) |
             Q(description__icontains=quertyset)
             ).distinct()
-    paginator = Paginator(posts, 2)
+    paginator = Paginator(posts, 1)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
     return render(request, 'index.html', {'posts':posts})
@@ -88,24 +88,25 @@ def activities(request):
     posts = paginator.get_page(page)
     return render(request, 'activities.html', {'posts':posts})
 
-"""def newpost(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post=form.save(commit=False)
-            post.author = request.user
-            post.published_date = datetime.now()
-            post.save()
-            return redirect('post', slug=post.slug)
-    else:
-        form = PostForm()
-    return render(request, 'newpost.html', {'form':form})
-"""
-
 class createPost(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostAdminForm
     template_name = 'newpost.html'
-    #fields = ['title', 'slug', 'description', 'category']
+    success_url = reverse_lazy('AppBlog:index')
+
+class PostListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'postoptions.html'
+    context_object_name = 'posts'
+
+class updatePost(LoginRequiredMixin, UpdateView):
+    model = Post
+    form_class = PostAdminForm
+    template_name = 'postedit.html'
+    success_url = reverse_lazy('AppBlog:index')
+
+class deletePost(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = 'postdelete.html'
     success_url = reverse_lazy('AppBlog:index')
 
