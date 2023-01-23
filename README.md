@@ -15,8 +15,6 @@ La finalidad de nuestro blog es acercar Mendoza al turista, y al propio mendocin
 
 ## Navegación por la web
 
-Como se detalló en el parrafo anterior, es un sistema web para agregar, buscar y listar datos (en esta primera etapa).<br>
-
 Se ingresa a la App del sistema a traves de la url: 127.0.0.1:8000/ <br>
 Encontramos la barra de navegacion arriba: Acerca de | Hoteles | Gastronomía | Actividades | Chat | <br>
 En la barra de navegacion tambien encontramos las opciones para Registrarme | Iniciar Sesion y en el caso de ya estar loggeado, la opcion Cerrar Sesion.
