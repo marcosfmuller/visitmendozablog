@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from .models import Avatar
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -11,6 +12,14 @@ from .forms import *
 
 
 # Create your views here.
+
+def obtenerAvatar(request):
+    lista=Avatar.objects.filter(user=request.user)
+    if len(lista)!=0:
+        imagen=lista[0].imagen.url
+    else:
+        imagen="media/avatars/transparent-default-avatar.png"
+    return imagen
 
 def register(request):
     if request.method=="POST":
@@ -45,7 +54,7 @@ def login_request(request):
 
 @login_required
 def panelctrl(request):
-    return render(request, 'panelctrl.html')
+    return render(request, 'panelctrl.html', {'imagen':obtenerAvatar(request)})
 
 @login_required
 def editar_perfil(request):
@@ -56,18 +65,24 @@ def editar_perfil(request):
             return render(request, 'panelctrl.html', {"form":form, "mensaje":"Perfil actualizado correctamente"})
     else:
         form=UserEditForm(instance=request.user)    
-    return render(request, 'profile.html', {"form":form})
+    return render(request, 'profile.html', {"form":form, 'imagen':obtenerAvatar(request)})
 
 @login_required
-def avatar(request):
+def agregarAvatar(request):
     if request.method=="POST":
         form=AvatarForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            avatarViejo=Avatar.objects.filter(user=request.user)
+            if len(avatarViejo)!=0:
+                avatarViejo[0].delete()
+            avatar=Avatar(user=request.user, imagen=request.FILES["imagen"])
+            avatar.save()
             return redirect('AppBlog:index')
+        else:
+            return render(request, 'avataradd.html', {"formulario":form, "usuario":request.user})
     else:
         form=AvatarForm()    
-    return render(request, 'avatar.html', {"form":form})
+        return render(request, 'avataradd.html', {"formulario":form, "usuario":request.user, 'imagen':obtenerAvatar(request)})
 
 class UserListView(LoginRequiredMixin, ListView):
     model = User

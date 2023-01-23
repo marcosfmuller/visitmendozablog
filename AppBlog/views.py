@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .forms import *
-from datetime import datetime
+from AppAccounts.models import Avatar
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,27 +12,43 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 
+def obtenerAvatar(request):
+    lista=Avatar.objects.filter(user=request.user)
+    if len(lista)!=0:
+        imagen=lista[0].imagen.url
+    else:
+        imagen="media/avatars/transparent-default-avatar.png"
+    return imagen
+
 def home(request):
-    quertyset = request.GET.get('buscar')
+    queryset = request.GET.get('buscar')
     posts = Post.objects.filter(status=True)
-    if quertyset:
+    if queryset:
         posts = Post.objects.filter(
-            Q(title__icontains=quertyset) |
-            Q(description__icontains=quertyset)
+            Q(title__icontains=queryset) |
+            Q(description__icontains=queryset)
             ).distinct()
     paginator = Paginator(posts, 1)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    return render(request, 'index.html', {'posts':posts})
+    if request.user.is_authenticated:
+        return render(request, 'index.html', {'posts':posts, 'imagen':obtenerAvatar(request)})
+    else:
+        return render(request, 'index.html', {'posts':posts})
+    
+          
 
 @login_required
 def detailpost(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    return render(request, 'post.html', {'post':post})
+    return render(request, 'post.html', {'post':post, 'imagen':obtenerAvatar(request)})
 
 def about(request):
     about = About.objects.get(id=1)
-    return render(request, 'about.html', {'about':about})
+    if request.user.is_authenticated:
+        return render(request, 'about.html', {'about':about, 'imagen':obtenerAvatar(request)})
+    else:
+        return render(request, 'about.html', {'about':about})    
 
 def gastronomy(request):
     queryset = request.GET.get('buscar')
@@ -50,7 +66,10 @@ def gastronomy(request):
     paginator = Paginator(posts, 2)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    return render(request, 'gastronomy.html', {'posts':posts})
+    if request.user.is_authenticated:
+        return render(request, 'gastronomy.html', {'posts':posts, 'imagen':obtenerAvatar(request)})
+    else:
+        return render(request, 'gastronomy.html', {'posts':posts})
 
 def hotels(request):
     queryset = request.GET.get('buscar')
@@ -68,8 +87,11 @@ def hotels(request):
     paginator = Paginator(posts, 2)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    return render(request, 'hotels.html' , {'posts':posts})
-
+    if request.user.is_authenticated:
+        return render(request, 'hotels.html', {'posts':posts, 'imagen':obtenerAvatar(request)})
+    else:
+        return render(request, 'hotels.html', {'posts':posts})
+    
 def activities(request):
     queryset = request.GET.get('buscar')
     posts = Post.objects.filter(
@@ -86,7 +108,10 @@ def activities(request):
     paginator = Paginator(posts, 2)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    return render(request, 'activities.html', {'posts':posts})
+    if request.user.is_authenticated:
+        return render(request, 'activities.html', {'posts':posts, 'imagen':obtenerAvatar(request)})
+    else:
+        return render(request, 'activities.html', {'posts':posts})
 
 class createPost(LoginRequiredMixin, CreateView):
     model = Post

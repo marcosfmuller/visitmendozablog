@@ -9,6 +9,10 @@
     <h3> Lista de Usuarios </h3>
 {% endblock titulo_body %}
 
+{% block img %}
+
+{% endblock img %}
+
 {% block search %}
 
 {% endblock search %}
@@ -23,7 +27,7 @@
     </table>
         <br>
         <input type="submit" class="btn btn-primary" value="Guardar">
-        <a class="btn btn-primary text" onclick="history.back()">Salir sin Guardar</a>
+        <a class="btn btn-primary text" href="{% url 'AppAccounts:userlist' %}">Salir sin Guardar</a>
     
 </form>
 

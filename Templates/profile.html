@@ -21,12 +21,22 @@
     <br>
     <br>
     <table> 
-        {{ form.as_table | safe }}
+        {{ form.as_table | safe }} 
     </table>
     <br>
-    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 justify-content-center" display="flex">
+                <img src="{{ imagen }}" alt="Avatar" width="200" height="200">
+            </div>
+        </div>
+    </div>
+    <br>
     <input type="submit" class="btn btn-primary" value="Guardar">
-    <a class="btn btn-primary text" onclick="history.back()">Salir sin Guardar</a>
+    <a class="btn btn-primary text" href="{% url 'AppAccounts:avatar' %}">Agregar o Cambiar Avatar</a> 
+    <br>
+    <br>
+    <a class="btn btn-primary text" href="{% url 'AppBlog:index' %}">Salir sin Guardar</a>
 
 
 </form>

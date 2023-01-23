@@ -44,4 +44,5 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Autor, AutorAdmin)
 admin.site.register(About, AboutAdmin)
 
+
 # Register your models here.

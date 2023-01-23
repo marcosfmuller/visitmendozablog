@@ -19,7 +19,7 @@
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-            <div class="container px-4 px-lg-5">
+            <div class="container px-2 px-lg-3">
                 <a class="navbar-brand" href="{% url 'AppBlog:index' %}">Visit Mendoza</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
@@ -32,14 +32,17 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:gastronomy' %}">Gastronomía</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:hotels' %}">Hotelería</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlog:activities' %}">Actividades</a></li>
-                        {% if user.is_authenticated %}
+                        {% if request.user.is_authenticated %}
                         <li class="nav-item"><a class="btn btn-primary" style="color:rgb(255, 0, 0)" href="{% url 'AppAccounts:logout' %}">Cerrar Sesión</a></li>
                             {% if user.is_staff %}
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:rgb(226, 142, 187)" href="{% url 'AppAccounts:panelctrl' %}"> Hola {{ user.username }}</a></li>
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:rgb(226, 142, 187)" href="{% url 'AppAccounts:panelctrl' %}"> Hola {{ request.user }}</a></li>
+                            {% block img %}
+                            <img src="{{ imagen }}" alt="" style="width: 50px; height: 50px; border-radius: 50%; margin-left: 0px; margin-top: 10px;">
+                            {% endblock img %}
                             {% else %}                                
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:rgb(136, 240, 133)" href="{% url 'AppAccounts:profile' %}">  Hola {{ user.username }} </a></li>
-                            <img src="{{ imagen }}" alt="">
-                            {% endif %}
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:rgb(136, 240, 133)" href="{% url 'AppAccounts:profile' %}">  Hola {{ request.user }} </a></li>
+                            <img src="{{ imagen }}" alt="" style="width: 50px; height: 50px; border-radius: 50%; margin-left: 0px; margin-top: 10px;">
+                        {% endif %}
                         {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color:greenyellow" href="{% url 'AppAccounts:register' %}">Registrarme</a></li>
                         <li class="nav-item"><a class="btn btn-primary" href="{% url 'AppAccounts:login' %}">Iniciar Sesion</a></li>
@@ -135,6 +138,7 @@
                     <li class="page-item">
                         <a class="btn btn-primary" color="btn-primary" style="border:1px" href="?page={{ posts.previous_page_number }}&buscar={{ request.GET.buscar }}">Anterior</a>
                     </li>
+                    <div class="vr"></div>
                 {% endif %}
                 {% if posts.has_next %}
                     <li class="page-item">
